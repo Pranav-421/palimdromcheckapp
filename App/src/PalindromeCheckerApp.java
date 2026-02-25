@@ -1,34 +1,37 @@
 //version 2.0
 //Author Gojo
-//use case 3:
+//use case 4:
 
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
-        import java.util.Scanner;
-        Scanner scanner = new Scanner(System.in);
+         System.out.print("Enter a string: ");
+    String input = scanner.nextLine();
 
-        System.out.print("Enter a string to check: ");
-        String original = scanner.nextLine();
-        
-        String cleanOriginal = original.replaceAll("\\s+", "").toLowerCase();
-        String reversed = "";
-        
-        for (int i = cleanOriginal.length() - 1; i >= 0; i--) {
-            reversed += cleanOriginal.charAt(i); // String concatenation
+    String cleanInput = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+
+    char[] charArray = cleanInput.toCharArray();
+
+    int left = 0;
+    int right = charArray.length - 1;
+    boolean isPalindrome = true;
+
+    while (left < right) {
+        if (charArray[left] != charArray[right]) {
+            isPalindrome = false;
+            break; // Exit loop early if a mismatch is found
         }
-
-        System.out.println("Original String: " + cleanOriginal);
-        System.out.println("Reversed String: " + reversed);
-        
-        if (cleanOriginal.equals(reversed)) {
-            System.out.println("Result: The string is a palindrome.");
-        } else {
-            System.out.println("Result: The string is NOT a palindrome.");
-        }
-
-        scanner.close();
+        left++;  // Move forward
+        right--; // Move backward
     }
-}
+
+    if (isPalindrome && cleanInput.length() > 0) {
+        System.out.println("Result: \"" + input + "\" is a palindrome.");
+    } else {
+        System.out.println("Result: \"" + input + "\" is NOT a palindrome.");
+    }
+
+    scanner.close();
     }
 }
 3
