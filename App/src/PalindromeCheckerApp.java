@@ -4,7 +4,12 @@
 
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
-        System.out.println("Welcome to Palindrome Checker App Management System");
-        System. out. println("Modify this Logic to usecase 2");
+        String original = "madam";
+        String reversed = new StringBuilder(original).reverse().toString();
+        if (original.equals(reversed)) {
+            System.out.println(original + " is a palindrome.");
+        } else {
+            System.out.println(original + " is not a palindrome.");
+        }
     }
 }
