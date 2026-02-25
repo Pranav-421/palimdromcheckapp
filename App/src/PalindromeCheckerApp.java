@@ -1,15 +1,36 @@
 //version 2.0
 //Author Gojo
-//use case 2:
+//use case 4:
 
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
-        String original = "madam";
-        String reversed = new StringBuilder(original).reverse().toString();
-        if (original.equals(reversed)) {
-            System.out.println(original + " is a palindrome.");
-        } else {
-            System.out.println(original + " is not a palindrome.");
+         System.out.print("Enter a string: ");
+    String input = scanner.nextLine();
+
+    String cleanInput = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+
+    char[] charArray = cleanInput.toCharArray();
+
+    int left = 0;
+    int right = charArray.length - 1;
+    boolean isPalindrome = true;
+
+    while (left < right) {
+        if (charArray[left] != charArray[right]) {
+            isPalindrome = false;
+            break; // Exit loop early if a mismatch is found
         }
+        left++;  // Move forward
+        right--; // Move backward
+    }
+
+    if (isPalindrome && cleanInput.length() > 0) {
+        System.out.println("Result: \"" + input + "\" is a palindrome.");
+    } else {
+        System.out.println("Result: \"" + input + "\" is NOT a palindrome.");
+    }
+
+    scanner.close();
     }
 }
