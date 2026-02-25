@@ -1,6 +1,6 @@
 //version 2.0
 //Author Gojo
-//use case 2:
+//use case 3:
 
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
@@ -31,3 +31,4 @@ public class PalindromeCheckerApp {
 }
     }
 }
+3
