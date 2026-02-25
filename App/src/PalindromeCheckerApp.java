@@ -34,3 +34,4 @@ public class PalindromeCheckerApp {
     scanner.close();
     }
 }
+3
