@@ -1,6 +1,6 @@
 //version 2.0
 //Author Pranav
-//use case 5:
+//use case 6:
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.LinkedList;
