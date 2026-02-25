@@ -1,33 +1,44 @@
 //version 2.0
-//Author Gojo
-//use case 4:
+//Author Pranav
+//use case 5:
+import java.util.Scanner;
 import java.util.Stack;
-public class PalindromeCheckerApp {
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class UseCase6PalindromeCheckerApp {
     public static void main(String[] args) {
-         import java.util.Scanner;
         Scanner sc = new Scanner(System.in);
-        
+
         System.out.print("Enter string: ");
         String input = sc.nextLine();
-        String clean = input.toLowerCase();
-        
+        String clean = input.toLowerCase().replaceAll("[^a-z0-9]", "");
+
         Stack<Character> stack = new Stack<>();
-        
+  
+        Queue<Character> queue = new LinkedList<>();
+
         for (int i = 0; i < clean.length(); i++) {
-            stack.push(clean.charAt(i));
+            char c = clean.charAt(i);
+            stack.push(c);
+            queue.add(c);
         }
-        
-        String reversed = "";
+
+        boolean isPalindrome = true;
+
         while (!stack.isEmpty()) {
-            reversed += stack.pop();
+            if (!stack.pop().equals(queue.remove())) {
+                isPalindrome = false;
+                break;
+            }
         }
-        
-        if (clean.equals(reversed)) {
-            System.out.println("Result: Palindrome");
+
+        if (isPalindrome && clean.length() > 0) {
+            System.out.println("Result: It is a palindrome.");
         } else {
-            System.out.println("Result: Not a palindrome");
+            System.out.println("Result: It is NOT a palindrome.");
         }
-        
+
         sc.close();
     }
 }
