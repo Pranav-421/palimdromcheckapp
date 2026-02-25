@@ -1,39 +1,72 @@
 import java.util.Scanner;
-import java.util.Stack;
-import java.util.LinkedList;
-import java.util.Queue;
 
-public class UseCase6PalindromeCheckerApp {
+public class UseCase8PalindromeCheckerApp {
+
+    static class Node {
+        char d;
+        Node n;
+
+        Node(char d) {
+            this.d = d;
+            this.n = null;
+        }
+    }
+
+    public static boolean check(String s) {
+        s = s.replaceAll("\\s+", "").toLowerCase();
+
+        if (s.length() == 0) return true;
+
+        Node h = new Node(s.charAt(0));
+        Node t = h;
+
+        for (int i = 1; i < s.length(); i++) {
+            t.n = new Node(s.charAt(i));
+            t = t.n;
+        }
+
+        Node slow = h;
+        Node fast = h;
+
+        while (fast != null && fast.n != null) {
+            slow = slow.n;
+            fast = fast.n.n;
+        }
+
+        Node prev = null;
+        Node curr = slow;
+        Node next = null;
+
+        while (curr != null) {
+            next = curr.n;
+            curr.n = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        Node p1 = h;
+        Node p2 = prev;
+
+        while (p2 != null) {
+            if (p1.d != p2.d) {
+                return false;
+            }
+            p1 = p1.n;
+            p2 = p2.n;
+        }
+
+        return true;
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
         System.out.print("Enter string: ");
-        String input = sc.nextLine();
-        String clean = input.toLowerCase().replaceAll("[^a-z0-9]", "");
+        String s = sc.nextLine();
 
-        Stack<Character> stack = new Stack<>();
-
-        Queue<Character> queue = new LinkedList<>();
-
-        for (int i = 0; i < clean.length(); i++) {
-            char c = clean.charAt(i);
-            stack.push(c);
-            queue.add(c);
-        }
-
-        boolean isPalindrome = true;
-        
-        while (!stack.isEmpty()) {
-            if (!stack.pop().equals(queue.remove())) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        if (isPalindrome && clean.length() > 0) {
-            System.out.println("Result: It is a palindrome.");
+        if (check(s)) {
+            System.out.println("Palindrome");
         } else {
-            System.out.println("Result: It is NOT a palindrome.");
+            System.out.println("Not Palindrome");
         }
 
         sc.close();
