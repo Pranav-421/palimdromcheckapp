@@ -1,42 +1,40 @@
 //version 2.0
 //Author Pranav
-//use case 6:
-import java.util.Scanner;
-import java.util.Stack;
+//use case 7:
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Scanner;
 
-public class UseCase6PalindromeCheckerApp {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+public class UseCase7PalindromeCheckerApp {
 
-        System.out.print("Enter string: ");
-        String input = sc.nextLine();
-        String clean = input.toLowerCase().replaceAll("[^a-z0-9]", "");
+    public static boolean check(String s) {
+        s = s.replaceAll("\\s+", "").toLowerCase();
+        Deque<Character> d = new LinkedList<>();
 
-        Stack<Character> stack = new Stack<>();
-  
-        Queue<Character> queue = new LinkedList<>();
-
-        for (int i = 0; i < clean.length(); i++) {
-            char c = clean.charAt(i);
-            stack.push(c);
-            queue.add(c);
+        for (char c : s.toCharArray()) {
+            d.addLast(c);
         }
 
-        boolean isPalindrome = true;
-
-        while (!stack.isEmpty()) {
-            if (!stack.pop().equals(queue.remove())) {
-                isPalindrome = false;
-                break;
+        while (d.size() > 1) {
+            char f = d.removeFirst();
+            char l = d.removeLast();
+            if (f != l) {
+                return false;
             }
         }
 
-        if (isPalindrome && clean.length() > 0) {
-            System.out.println("Result: It is a palindrome.");
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter string: ");
+        String s = sc.nextLine();
+
+        if (check(s)) {
+            System.out.println("Palindrome");
         } else {
-            System.out.println("Result: It is NOT a palindrome.");
+            System.out.println("Not Palindrome");
         }
 
         sc.close();
