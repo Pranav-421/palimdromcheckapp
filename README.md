@@ -1,41 +1,25 @@
 import java.util.Scanner;
-import java.util.Stack;
-import java.util.LinkedList;
-import java.util.Queue;
 
-public class UseCase6PalindromeCheckerApp {
+public class UseCase9PalindromeCheckerApp {
+
+    static boolean check(String s, int l, int r) {
+        if (l >= r)
+            return true;
+        if (s.charAt(l) != s.charAt(r))
+            return false;
+        return check(s, l + 1, r - 1);
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
-        System.out.print("Enter string: ");
-        String input = sc.nextLine();
-        String clean = input.toLowerCase().replaceAll("[^a-z0-9]", "");
-
-        Stack<Character> stack = new Stack<>();
-
-        Queue<Character> queue = new LinkedList<>();
-
-        for (int i = 0; i < clean.length(); i++) {
-            char c = clean.charAt(i);
-            stack.push(c);
-            queue.add(c);
-        }
-
-        boolean isPalindrome = true;
-        
-        while (!stack.isEmpty()) {
-            if (!stack.pop().equals(queue.remove())) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        if (isPalindrome && clean.length() > 0) {
-            System.out.println("Result: It is a palindrome.");
-        } else {
-            System.out.println("Result: It is NOT a palindrome.");
-        }
-
+        System.out.println("Enter a string:");
+        String s = sc.nextLine();
+        s = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        boolean b = check(s, 0, s.length() - 1);
+        if (b)
+            System.out.println("It is a palindrome");
+        else
+            System.out.println("It is not a palindrome");
         sc.close();
     }
 }
