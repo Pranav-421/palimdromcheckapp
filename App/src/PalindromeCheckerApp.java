@@ -1,77 +1,28 @@
 //version 2.0
 //Author Pranav
-//use case 8:
+//use case 9:
 import java.util.Scanner;
 
-public class UseCase8PalindromeCheckerApp {
+public class UseCase9PalindromeCheckerApp {
 
-    static class Node {
-        char d;
-        Node n;
-
-        Node(char d) {
-            this.d = d;
-            this.n = null;
-        }
-    }
-
-    public static boolean check(String s) {
-        s = s.replaceAll("\\s+", "").toLowerCase();
-
-        if (s.length() == 0) return true;
-
-        Node h = new Node(s.charAt(0));
-        Node t = h;
-
-        for (int i = 1; i < s.length(); i++) {
-            t.n = new Node(s.charAt(i));
-            t = t.n;
-        }
-
-        Node slow = h;
-        Node fast = h;
-
-        while (fast != null && fast.n != null) {
-            slow = slow.n;
-            fast = fast.n.n;
-        }
-
-        Node prev = null;
-        Node curr = slow;
-        Node next = null;
-
-        while (curr != null) {
-            next = curr.n;
-            curr.n = prev;
-            prev = curr;
-            curr = next;
-        }
-
-        Node p1 = h;
-        Node p2 = prev;
-
-        while (p2 != null) {
-            if (p1.d != p2.d) {
-                return false;
-            }
-            p1 = p1.n;
-            p2 = p2.n;
-        }
-
-        return true;
+    static boolean check(String s, int l, int r) {
+        if (l >= r)
+            return true;
+        if (s.charAt(l) != s.charAt(r))
+            return false;
+        return check(s, l + 1, r - 1);
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter string: ");
+        System.out.println("Enter a string:");
         String s = sc.nextLine();
-
-        if (check(s)) {
-            System.out.println("Palindrome");
-        } else {
-            System.out.println("Not Palindrome");
-        }
-
+        s = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        boolean b = check(s, 0, s.length() - 1);
+        if (b)
+            System.out.println("It is a palindrome");
+        else
+            System.out.println("It is not a palindrome");
         sc.close();
     }
 }
