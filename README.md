@@ -12,7 +12,7 @@ public class UseCase6PalindromeCheckerApp {
         String clean = input.toLowerCase().replaceAll("[^a-z0-9]", "");
 
         Stack<Character> stack = new Stack<>();
-        // Queue for FIFO (Original Order)
+
         Queue<Character> queue = new LinkedList<>();
 
         for (int i = 0; i < clean.length(); i++) {
