@@ -1,41 +1,37 @@
-import java.util.Scanner;
-import java.util.Stack;
-import java.util.LinkedList;
-import java.util.Queue;
+    import java.util.Scanner;
 
-public class UseCase6PalindromeCheckerApp {
+    public class UseCase9PalindromeCheckerApp {
+
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter string: ");
-        String input = sc.nextLine();
-        String clean = input.toLowerCase().replaceAll("[^a-z0-9]", "");
+        System.out.println("--- UC9: Recursive Palindrome Checker ---");
+        System.out.print("Enter a string to check: ");
+        String input = scanner.nextLine();
 
-        Stack<Character> stack = new Stack<>();
+        String cleanInput = input.replaceAll("\\s+", "").toLowerCase();
 
-        Queue<Character> queue = new LinkedList<>();
+        boolean result = isPalindrome(cleanInput, 0, cleanInput.length() - 1);
 
-        for (int i = 0; i < clean.length(); i++) {
-            char c = clean.charAt(i);
-            stack.push(c);
-            queue.add(c);
-        }
-
-        boolean isPalindrome = true;
-        
-        while (!stack.isEmpty()) {
-            if (!stack.pop().equals(queue.remove())) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        if (isPalindrome && clean.length() > 0) {
-            System.out.println("Result: It is a palindrome.");
+        if (result) {
+            System.out.println("\"" + input + "\" is a palindrome.");
         } else {
-            System.out.println("Result: It is NOT a palindrome.");
+            System.out.println("\"" + input + "\" is not a palindrome.");
         }
 
-        sc.close();
+        scanner.close();
+    }
+
+    public static boolean isPalindrome(String str, int start, int end) {
+
+        if (start >= end) {
+            return true;
+        }
+
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
+        }
+
+        return isPalindrome(str, start + 1, end - 1);
     }
 }
