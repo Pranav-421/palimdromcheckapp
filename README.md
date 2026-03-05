@@ -1,40 +1,80 @@
-    import java.util.Scanner;
+    import java.util.*;
+    
+    interface PalindromeStrategy {
+    boolean isPalindrome(String input);
+    }
 
-    class PalindromeService {
-    public boolean checkPalindrome(String input) {
-        if (input == null || input.isEmpty()) {
-            return false;
+    class StackStrategy implements PalindromeStrategy {
+    public boolean isPalindrome(String input) {
+        String clean = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : clean.toCharArray()) {
+            stack.push(c);
         }
 
-        String clean = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-        int left = 0;
-        int right = clean.length() - 1;
+        StringBuilder reversed = new StringBuilder();
+        while (!stack.isEmpty()) {
+            reversed.append(stack.pop());
+        }
 
-        while (left < right) {
-            if (clean.charAt(left) != clean.charAt(right)) {
+        return clean.equals(reversed.toString());
+    }
+    }
+
+    
+    class DequeStrategy implements PalindromeStrategy {
+    public boolean isPalindrome(String input) {
+        String clean = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        Deque<Character> deque = new LinkedList<>();
+
+        for (char c : clean.toCharArray()) {
+            deque.addLast(c);
+        }
+
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
                 return false;
             }
-            left++;
-            right--;
         }
         return true;
     }
     }
 
-    public class UseCase11PalindromeCheckerApp {
+    class PalindromeContext {
+    private PalindromeStrategy strategy;
+
+    public void setStrategy(PalindromeStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public boolean executeStrategy(String input) {
+        return strategy.isPalindrome(input);
+    }
+    }
+
+    public class UseCase12PalindromeCheckerApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        PalindromeService service = new PalindromeService();
+        PalindromeContext context = new PalindromeContext();
 
-        System.out.println("--- UC11: Object-Oriented Palindrome Service ---");
+        System.out.println("--- UC12: Strategy Pattern Palindrome Checker ---");
         System.out.print("Enter string: ");
         String input = scanner.nextLine();
 
-        if (service.checkPalindrome(input)) {
-            System.out.println("Result: The input is a palindrome.");
+        System.out.println("Choose Strategy: 1. Stack  2. Deque");
+        int choice = scanner.nextInt();
+
+        if (choice == 1) {
+            context.setStrategy(new StackStrategy());
+            System.out.println("Using Stack Strategy...");
         } else {
-            System.out.println("Result: The input is NOT a palindrome.");
+            context.setStrategy(new DequeStrategy());
+            System.out.println("Using Deque Strategy...");
         }
+
+        boolean result = context.executeStrategy(input);
+        System.out.println("Result: Is Palindrome? " + result);
 
         scanner.close();
     }
