@@ -44,7 +44,6 @@ class DequeStrategy implements PalindromeStrategy {
     }
 }
 
-// Context Class
 class PalindromeContext {
     private PalindromeStrategy strategy;
 
