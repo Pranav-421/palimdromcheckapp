@@ -1,25 +1,37 @@
-import java.util.Scanner;
+    import java.util.Scanner;
 
-public class UseCase9PalindromeCheckerApp {
-
-    static boolean check(String s, int l, int r) {
-        if (l >= r)
-            return true;
-        if (s.charAt(l) != s.charAt(r))
-            return false;
-        return check(s, l + 1, r - 1);
-    }
+    public class UseCase9PalindromeCheckerApp {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a string:");
-        String s = sc.nextLine();
-        s = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-        boolean b = check(s, 0, s.length() - 1);
-        if (b)
-            System.out.println("It is a palindrome");
-        else
-            System.out.println("It is not a palindrome");
-        sc.close();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("--- UC10: Recursive Palindrome Checker ---");
+        System.out.print("Enter a string to check: ");
+        String input = scanner.nextLine();
+
+        String cleanInput = input.replaceAll("\\s+", "").toLowerCase();
+
+        boolean result = isPalindrome(cleanInput, 0, cleanInput.length() - 1);
+
+        if (result) {
+            System.out.println("\"" + input + "\" is a palindrome.");
+        } else {
+            System.out.println("\"" + input + "\" is not a palindrome.");
+        }
+
+        scanner.close();
+    }
+
+    public static boolean isPalindrome(String str, int start, int end) {
+
+        if (start >= end) {
+            return true;
+        }
+
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
+        }
+
+        return isPalindrome(str, start + 1, end - 1);
     }
 }
