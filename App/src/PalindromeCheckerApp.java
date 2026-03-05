@@ -1,46 +1,67 @@
 //version 2.0
 //Author Pranav
-//use case 12:
-import java.util.*;
+//use case 13:
+    import java.util.*;
 
-interface PalindromeStrategy {
-    boolean isPalindrome(String input);
-}
+    public class UseCase13PalindromeCheckerApp {
 
-class StackStrategy implements PalindromeStrategy {
-    public boolean isPalindrome(String input) {
-        String clean = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-        Stack<Character> stack = new Stack<>();
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        for (char c : clean.toCharArray()) {
-            stack.push(c);
-        }
+        System.out.println("--- UC13: Palindrome Performance Comparison ---");
+        System.out.print("Enter a long string to benchmark: ");
+        String input = scanner.nextLine();
 
-        StringBuilder reversed = new StringBuilder();
-        while (!stack.isEmpty()) {
-            reversed.append(stack.pop());
-        }
+        String cleanInput = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        return clean.equals(reversed.toString());
+        System.out.println("\nBenchmarking Algorithms...");
+        System.out.printf("%-25s | %-15s | %-10s\n", "Algorithm", "Time (nanos)", "Result");
+
+
+        long startIterative = System.nanoTime();
+        boolean resIterative = checkIterative(cleanInput);
+        long endIterative = System.nanoTime();
+        displayResult("Two-Pointer (Iterative)", endIterative - startIterative, resIterative);
+
+
+        long startRecursive = System.nanoTime();
+        boolean resRecursive = checkRecursive(cleanInput, 0, cleanInput.length() - 1);
+        long endRecursive = System.nanoTime();
+        displayResult("Recursive", endRecursive - startRecursive, resRecursive);
+
+        long startStack = System.nanoTime();
+        boolean resStack = checkStack(cleanInput);
+        long endStack = System.nanoTime();
+        displayResult("Stack-based", endStack - startStack, resStack);
+
+        scanner.close();
     }
-}
 
-
-class DequeStrategy implements PalindromeStrategy {
-    public boolean isPalindrome(String input) {
-        String clean = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-        Deque<Character> deque = new LinkedList<>();
-
-        for (char c : clean.toCharArray()) {
-            deque.addLast(c);
-        }
-
-        while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
-                return false;
-            }
+    private static boolean checkIterative(String str) {
+        int left = 0, right = str.length() - 1;
+        while (left < right) {
+            if (str.charAt(left++) != str.charAt(right--)) return false;
         }
         return true;
+    }
+
+    private static boolean checkRecursive(String str, int s, int e) {
+        if (s >= e) return true;
+        if (str.charAt(s) != str.charAt(e)) return false;
+        return checkRecursive(str, s + 1, e - 1);
+    }
+
+    private static boolean checkStack(String str) {
+        Stack<Character> stack = new Stack<>();
+        for (char c : str.toCharArray()) stack.push(c);
+        for (char c : str.toCharArray()) {
+            if (c != stack.pop()) return false;
+        }
+        return true;
+    }
+
+    private static void displayResult(String name, long time, boolean result) {
+        System.out.printf("%-25s | %-15d | %-10s\n", name, time, result);
     }
 }
 
