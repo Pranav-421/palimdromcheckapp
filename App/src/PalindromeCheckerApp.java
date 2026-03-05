@@ -8,7 +8,7 @@ public class UseCase9PalindromeCheckerApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("--- UC9: Recursive Palindrome Checker ---");
+        System.out.println("--- UC10: Recursive Palindrome Checker ---");
         System.out.print("Enter a string to check: ");
         String input = scanner.nextLine();
 
